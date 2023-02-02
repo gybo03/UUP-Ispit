@@ -13,102 +13,7 @@ void printM(int a[n][n]) {
     }
     printf("\n");
 }
-struct linked_list{
-    char name[500];
-    int numerator;
-    int denominator;
-    struct linked_list* next;
-};
 
-typedef struct linked_list list;
-list* make_node(){
-    list* node = (list*)malloc(sizeof(list));
-    node->numerator = 0;
-    node->denominator = 0;
-    node->next = NULL;
-    return node;
-}
-
-
-typedef struct Node {
-    char *ime;
-    char *dijeta;
-    int brKila;
-    struct Node *left, *right;
-} Node;
-
-list* find_avarege(Node* root, list* head){
-
-    if (root){
-        
-        if (head){
-            list* temp = head;
-            int bool_ = 0;
-            list* prev = temp;
-            while (temp && !bool_)
-            {
-                if (strcmp(root->dijeta, temp->name) == 0){
-                    bool_ = 1;   
-                    temp->numerator += root->brKila;
-                    temp->denominator ++;
-                    
-                }   
-                prev = temp;
-                temp = temp->next;
-            }
-
-            if (bool_ == 0){
-                list* new = make_node();
-                strcpy(new->name, root->dijeta);
-                new->numerator = root->brKila;
-                new->denominator = 1;
-                new->next = NULL;
-                prev->next = new;
-
-            }
-            
-        }
-
-        else
-        {
-            head = make_node();
-            strcpy(head->name, root->dijeta);
-            head->numerator = root->brKila;
-            head->denominator ++;
-            
-        }
-                
-        find_avarege(root->left, head);
-        find_avarege(root->right, head);
-        return head;
-        
-
-    }
-
-
-}
-    
-
-    
-    
-char* find_best(list* head){
-    char diet[500];
-    float result = 0.0;
-    if (head){
-        list* temp = head;
-        if((temp->numerator)/temp->denominator > result){
-            result = (temp->numerator)/temp->denominator;
-            strcpy(diet,temp->name);
-        }
-
-    }
-    else{
-        printf("The list does not have a head/root element!");
-    }
-    char* ans = malloc(sizeof(diet));
-    strcpy(ans,diet);
-    return ans;
-}
 
 
 
@@ -187,10 +92,6 @@ void shiftujStrDesno(char S[], int i) {
     S[strlen(S) + 2] = 0;
 }
 
-void dodajChar(char S[], int i, int brPonavljanja) {
-
-}
-
 void zad2(char P[], char S[]) {
     for (int i = 0; i < strlen(S); ++i) {
         int brPonavljanjaUP = 0;
@@ -211,6 +112,108 @@ void zad2(char P[], char S[]) {
     }
     printf("%s", S);
 }
+
+struct linked_list{
+    char name[500];
+    int numerator;
+    int denominator;
+    struct linked_list* next;
+};
+
+typedef struct linked_list list;
+list* make_node(){
+    list* node = (list*)malloc(sizeof(list));
+    node->numerator = 0;
+    node->denominator = 0;
+    node->next = NULL;
+    return node;
+}
+
+
+typedef struct Node {
+    char *ime;
+    char *dijeta;
+    int brKila;
+    struct Node *left, *right;
+} Node;
+
+list* find_avarege(Node* root, list* head){
+
+    if (root){
+
+        if (head){
+            list* temp = head;
+            int bool_ = 0;
+            list* prev = temp;
+            while (temp && !bool_)
+            {
+                if (strcmp(root->dijeta, temp->name) == 0){
+                    bool_ = 1;
+                    temp->numerator += root->brKila;
+                    temp->denominator ++;
+
+                }
+                prev = temp;
+                temp = temp->next;
+            }
+
+            if (bool_ == 0){
+                list* new = make_node();
+                strcpy(new->name, root->dijeta);
+                new->numerator = root->brKila;
+                new->denominator = 1;
+                new->next = NULL;
+                prev->next = new;
+
+            }
+
+        }
+
+        else
+        {
+            head = make_node();
+            strcpy(head->name, root->dijeta);
+            head->numerator = root->brKila;
+            head->denominator ++;
+
+        }
+
+        find_avarege(root->left, head);
+        find_avarege(root->right, head);
+        return head;
+
+
+    }
+
+
+}
+
+
+
+
+char* find_best(list* head){
+    char diet[500];
+    float result = 0.0;
+    if (head){
+        list* temp = head;
+        while(temp->next){
+            if((temp->numerator)/temp->denominator > result){
+                result = (temp->numerator)/temp->denominator;
+                strcpy(diet,temp->name);
+            }
+            temp=temp->next;
+        }
+
+
+    }
+    else{
+        printf("The list does not have a head/root element!");
+    }
+    char* ans = malloc(sizeof(diet));
+    strcpy(ans,diet);
+    return ans;
+}
+
 
 
 Node *createNode(char *ime, char *dijeta, int brKila) {
@@ -280,7 +283,43 @@ int count_lines(char* filename) {
     return lines;
 }
 
+char* toUpper(char* str){
+    char out[100];
+    for (int i = 0; i < strlen(str); ++i) {
+        if(str[i]>96){
+            out[i]=str[i]-32;
+        }
+        else{
+            out[i]=str[i];
+        }
+    }
+    out[strlen(str)]=0;
+    char* ans=(char*) malloc(sizeof(out));
+    strcpy(ans,out);
+    return ans;
+}
 
+void sveOsobeSaIstimKorenomReci(Node* root,char* str){
+    if(root){
+        char* ime= toUpper(root->ime);
+        char* str1= toUpper(str);
+        //printf("\nime=%s str1=%s\n",ime,str1);
+        if(strstr(ime,str1)){
+            printNode(root);
+            printf("\n");
+        }
+        sveOsobeSaIstimKorenomReci(root->left,str);
+        sveOsobeSaIstimKorenomReci(root->right,str);
+    }
+
+}
+
+void free_tree(Node *root) {
+    if (root == NULL) return;
+    free_tree(root->left);
+    free_tree(root->right);
+    free(root);
+}
 
 
 int main() {
@@ -296,10 +335,10 @@ int main() {
     printf("%s",S);
     zad2(P,S);*/
 
-    FILE *fp = fopen("podaci.txt", "r");
+    FILE *fp = fopen("..\\podaci\\UUP-21-22-JAN-G1-Z3 fajl.txt", "r");
     char red[100];
     Node *root = NULL;
-    int brLinija= count_lines("podaci.txt");
+    int brLinija= count_lines("..\\podaci\\UUP-21-22-JAN-G1-Z3 fajl.txt");
 
     char ime[100];
     char dijeta[100];
@@ -318,7 +357,7 @@ int main() {
             //printf("ime=%s dijeta=%s brKila=%d\n",ime,dijeta, brKila);
             root = addNode(root, ime, dijeta, brKila);
 
-            
+
         }
         fclose(fp);
     } else {
@@ -326,11 +365,13 @@ int main() {
     }
 
 
-    list* head=NULL;
-    head=(list*)find_avarege(root,head);
+    /*list* head=NULL;
+    head=find_avarege(root,head);
 
 
     char* best_diet = find_best(head);
-    printf("The best diet happens to be %s", best_diet);
+    printf("The best diet happens to be %s", best_diet);*/
+    char *str="sa";
+    sveOsobeSaIstimKorenomReci(root,str);
     return 0;
 }
