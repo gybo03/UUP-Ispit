@@ -1,0 +1,3 @@
+C:/Users/Admin/Documents/CLionProjects/UUP-21-22-JAN-G2/cmake-build-debug/CMakeFiles/UUP_21_22_JAN_G2.dir
+C:/Users/Admin/Documents/CLionProjects/UUP-21-22-JAN-G2/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Admin/Documents/CLionProjects/UUP-21-22-JAN-G2/cmake-build-debug/CMakeFiles/rebuild_cache.dir

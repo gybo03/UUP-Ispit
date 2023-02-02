@@ -1,0 +1,9 @@
+Marko,182,79
+Ivana,165,55
+Jovan,177,78
+Marija,159,56
+Bogdan,198,95
+Ana,172,68
+Goran,185,98
+Milica,179,72
+Lazar,169,62
